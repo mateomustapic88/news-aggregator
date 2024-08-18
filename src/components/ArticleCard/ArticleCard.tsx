@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 import "./ArticleCard.scss";
 
 interface ArticleCardProps {
@@ -16,6 +17,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
   source,
   publishedAt,
 }) => {
+  const formattedDate = dayjs(publishedAt).format("MMMM D, YYYY");
+
   return (
     <div className='article-card'>
       {imageUrl && (
@@ -26,7 +29,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
         <p className='article-card__description'>{description}</p>
         <p className='article-card__meta'>
           <span className='article-card__source'>{source}</span> |{" "}
-          <span className='article-card__date'>{publishedAt}</span>
+          <span className='article-card__date'>{formattedDate}</span>
         </p>
       </div>
     </div>
