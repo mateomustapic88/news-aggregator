@@ -48,3 +48,8 @@ To get started with the Innoscripta News Aggregator App, follow these steps:
    `npm start`
 
 The app will be available at `http://localhost:3000` , enjoy!!
+
+## Bonus Features
+
+- Filter articles with images
+- Save articles for later (use of local storage)

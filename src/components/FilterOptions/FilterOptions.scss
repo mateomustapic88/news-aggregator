@@ -33,8 +33,8 @@
     font-size: 1em;
     border: 1px solid #ddd;
     border-radius: 12px;
-    flex: 1 1 100%;
-    max-width: 100%;
+    flex: 1 1 40%;
+    max-width: 40%;
   }
 
   @media (max-width: 600px) {
@@ -44,6 +44,9 @@
 
     &__date-group {
       flex-direction: column;
+    }
+    &__input {
+      max-width: 100%;
     }
   }
 
@@ -69,5 +72,15 @@
     &__date-group {
       max-width: 100%;
     }
+  }
+}
+
+.filter-options__checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  color: #fff;
+  input {
+    margin-right: 8px;
   }
 }

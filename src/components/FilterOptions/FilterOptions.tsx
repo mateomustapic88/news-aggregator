@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./FilterOptions.scss";
 
 interface FilterOptionsProps {
@@ -8,6 +8,7 @@ interface FilterOptionsProps {
     category?: string;
     source?: string;
     date?: string;
+    hasImage?: boolean;
   }) => void;
 }
 
@@ -16,53 +17,76 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
   sources,
   onFilterChange,
 }) => {
-  const [category, setCategory] = React.useState<string>("");
-  const [source, setSource] = React.useState<string>("");
-  const [date, setDate] = React.useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSource, setSelectedSource] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [hasImage, setHasImage] = useState(false);
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newCategory = e.target.value;
-    setCategory(newCategory);
-    onFilterChange({ category: newCategory, source, date });
+    setSelectedCategory(e.target.value);
+    onFilterChange({
+      category: e.target.value,
+      source: selectedSource,
+      date: selectedDate,
+      hasImage,
+    });
   };
 
   const handleSourceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newSource = e.target.value;
-    setSource(newSource);
-    onFilterChange({ category, source: newSource, date });
+    setSelectedSource(e.target.value);
+    onFilterChange({
+      category: selectedCategory,
+      source: e.target.value,
+      date: selectedDate,
+      hasImage,
+    });
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDate = e.target.value;
-    setDate(newDate);
-    onFilterChange({ category, source, date: newDate });
+    setSelectedDate(e.target.value);
+    onFilterChange({
+      category: selectedCategory,
+      source: selectedSource,
+      date: e.target.value,
+      hasImage,
+    });
+  };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHasImage(e.target.checked);
+    onFilterChange({
+      category: selectedCategory,
+      source: selectedSource,
+      date: selectedDate,
+      hasImage: e.target.checked,
+    });
   };
 
   return (
     <div className='filter-options'>
       <div className='filter-options__select-group'>
         <select
-          value={category}
-          onChange={handleCategoryChange}
           className='filter-options__select'
+          value={selectedCategory}
+          onChange={handleCategoryChange}
         >
           <option value=''>All Categories</option>
-          {categories.map((cat, index) => (
-            <option key={index} value={cat}>
-              {cat}
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
             </option>
           ))}
         </select>
 
         <select
-          value={source}
-          onChange={handleSourceChange}
           className='filter-options__select'
+          value={selectedSource}
+          onChange={handleSourceChange}
         >
           <option value=''>All Sources</option>
-          {sources.map((src) => (
-            <option key={src.id} value={src.id}>
-              {src.name}
+          {sources.map((source) => (
+            <option key={source.id} value={source.id}>
+              {source.name}
             </option>
           ))}
         </select>
@@ -71,10 +95,19 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
       <div className='filter-options__date-group'>
         <input
           type='date'
-          value={date}
-          onChange={handleDateChange}
           className='filter-options__input'
+          value={selectedDate}
+          onChange={handleDateChange}
         />
+      </div>
+
+      <div className='filter-options__checkbox'>
+        <input
+          type='checkbox'
+          checked={hasImage}
+          onChange={handleCheckboxChange}
+        />
+        Articles with images
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ interface ArticleCardProps {
   imageUrl: string;
   source: string;
   publishedAt: string;
+  actionButton?: JSX.Element; // Add this prop
 }
 
 const ArticleCard: React.FC<ArticleCardProps> = ({
@@ -16,6 +17,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
   imageUrl,
   source,
   publishedAt,
+  actionButton,
 }) => {
   const formattedDate = dayjs(publishedAt).format("MMMM D, YYYY");
 
@@ -31,6 +33,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
           <span className='article-card__source'>{source}</span> |{" "}
           <span className='article-card__date'>{formattedDate}</span>
         </p>
+        {actionButton && (
+          <div className='article-card__button-container'>{actionButton}</div>
+        )}
       </div>
     </div>
   );

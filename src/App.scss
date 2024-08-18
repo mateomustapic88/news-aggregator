@@ -15,3 +15,32 @@
     color: #fff;
   }
 }
+
+.read-later-toggle-button {
+  background-color: #38a09d;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.article-action-button {
+  background-color: #38a09d;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.article-action-button.save {
+  background-color: #38a09d;
+}
+
+.article-action-button.remove {
+  background-color: #c23e3e;
+}

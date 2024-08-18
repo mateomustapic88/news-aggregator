@@ -25,6 +25,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         className='search-bar__input'
         placeholder='Search articles...'
         value={query}
+        onBlur={handleSearch}
         onChange={(e) => setQuery(e.target.value)}
       />
       {query && (
