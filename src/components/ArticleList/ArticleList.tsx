@@ -9,6 +9,7 @@ interface ArticleListProps {
     imageUrl: string;
     source: string;
     publishedAt: string;
+    actionButton?: JSX.Element;
   }[];
 }
 
@@ -23,6 +24,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles }) => {
           imageUrl={article.imageUrl}
           source={article.source}
           publishedAt={article.publishedAt}
+          actionButton={article.actionButton} // Pass the action button
         />
       ))}
     </div>

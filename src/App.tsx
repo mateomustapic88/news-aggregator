@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import SearchBar from "./components/SearchBar/SearchBar";
 import FilterOptions from "./components/FilterOptions/FilterOptions";
 import ArticleList from "./components/ArticleList/ArticleList";
+import ReadLater from "./components/ReadLater/ReadLater";
 import {
   fetchNewsFromNewsAPI,
   fetchNewsFromGuardian,
@@ -14,6 +15,8 @@ import { filterRemovedContent } from "./utils/filterRemovedContent";
 const App: React.FC = () => {
   const [articles, setArticles] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [showReadLater, setShowReadLater] = useState(false);
+  const [savedArticles, setSavedArticles] = useState<any[]>([]);
 
   const sources = [
     { name: "CNN", id: "cnn", api: "newsapi" },
@@ -23,6 +26,7 @@ const App: React.FC = () => {
 
   const handleSearch = async (query: string) => {
     setLoading(true);
+    setShowReadLater(false);
     try {
       const searchQuery = query.trim() || "latest";
       const newsAPIArticles = await fetchNewsFromNewsAPI(searchQuery);
@@ -52,6 +56,7 @@ const App: React.FC = () => {
     hasImage?: boolean;
   }) => {
     setLoading(true);
+    setShowReadLater(false);
     try {
       const {
         category = "",
@@ -76,7 +81,6 @@ const App: React.FC = () => {
 
       let allArticles = [...newsAPIArticles, ...nytArticles];
 
-      // Filter articles based on the presence of an image
       if (hasImage) {
         allArticles = allArticles.filter((article) => article.imageUrl);
       }
@@ -117,6 +121,36 @@ const App: React.FC = () => {
     fetchInitialArticles();
   }, []);
 
+  const toggleReadLaterView = () => {
+    setShowReadLater((prevShowReadLater) => !prevShowReadLater);
+  };
+
+  const handleSaveForLater = (article: any) => {
+    setSavedArticles((prevSavedArticles) => {
+      if (
+        prevSavedArticles.find(
+          (savedArticle) => savedArticle.title === article.title
+        )
+      ) {
+        return prevSavedArticles.filter(
+          (savedArticle) => savedArticle.title !== article.title
+        );
+      }
+      return [...prevSavedArticles, article];
+    });
+  };
+
+  const handleRemoveFromSaved = (article: any) => {
+    setSavedArticles((prevSavedArticles) =>
+      prevSavedArticles.filter(
+        (savedArticle) => savedArticle.title !== article.title
+      )
+    );
+  };
+
+  const isArticleSaved = (article: any) =>
+    savedArticles.some((savedArticle) => savedArticle.title === article.title);
+
   return (
     <div className='app'>
       <Header />
@@ -127,10 +161,37 @@ const App: React.FC = () => {
           sources={sources}
           onFilterChange={handleFilterChange}
         />
-        {loading ? (
+        <button
+          onClick={toggleReadLaterView}
+          className='read-later-toggle-button'
+        >
+          {showReadLater ? "View All Articles" : "View Read Later Articles"}
+        </button>
+        {showReadLater ? (
+          <ReadLater
+            savedArticles={savedArticles}
+            onRemoveArticle={handleRemoveFromSaved}
+          />
+        ) : loading ? (
           <p className='loading'>Loading articles...</p>
         ) : (
-          <ArticleList articles={articles} />
+          <ArticleList
+            articles={articles.map((article) => ({
+              ...article,
+              actionButton: (
+                <button
+                  onClick={() => handleSaveForLater(article)}
+                  className={`article-action-button ${
+                    isArticleSaved(article) ? "remove" : "save"
+                  }`}
+                >
+                  {isArticleSaved(article)
+                    ? "Remove For Later"
+                    : "Save For Later"}
+                </button>
+              ),
+            }))}
+          />
         )}
       </div>
     </div>

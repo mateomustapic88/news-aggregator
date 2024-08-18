@@ -1,0 +1,23 @@
+.remove-from-saved-button {
+  background-color: #c23e3e;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #a32d2d;
+  }
+}
+
+.read-later__item {
+  margin-bottom: 15px;
+}
+
+.read-later {
+  color: #fff;
+}
