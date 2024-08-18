@@ -2,11 +2,16 @@
 
 .app {
   font-family: "Raleway", sans-serif;
-  background-color: #f4f4f4;
+  background-color: #0b3249;
   padding: 20px;
+  min-height: 100vh;
 
   &__content {
     max-width: 1200px;
     margin: 0 auto;
+  }
+
+  .loading {
+    color: #fff;
   }
 }
