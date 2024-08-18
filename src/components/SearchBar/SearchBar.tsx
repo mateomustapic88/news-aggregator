@@ -36,7 +36,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           &times;
         </button>
       )}
-      <button type='submit' className='search-bar__button'>
+      <button type='submit' className='search-bar__button' disabled={!query}>
         Search
       </button>
     </form>
