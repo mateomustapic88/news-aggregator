@@ -74,3 +74,13 @@
     }
   }
 }
+
+.filter-options__checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  color: #fff;
+  input {
+    margin-right: 8px;
+  }
+}

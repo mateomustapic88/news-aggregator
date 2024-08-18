@@ -21,18 +21,14 @@ const App: React.FC = () => {
     { name: "The New York Times", id: "nyt", api: "nyt" },
   ];
 
-  // Function to handle search and update articles
   const handleSearch = async (query: string) => {
     setLoading(true);
     try {
-      // Use a default query if the query is empty
       const searchQuery = query.trim() || "latest";
-
       const newsAPIArticles = await fetchNewsFromNewsAPI(searchQuery);
       const guardianArticles = await fetchNewsFromGuardian(searchQuery);
       const nytArticles = await fetchNewsFromNYT(searchQuery);
 
-      // Combine and filter articles
       const allArticles = [
         ...newsAPIArticles,
         ...guardianArticles,
@@ -48,19 +44,24 @@ const App: React.FC = () => {
     }
   };
 
-  // Function to handle filter changes
   const handleFilterChange = async (filter: {
     category?: string;
     source?: string;
     author?: string;
     date?: string;
+    hasImage?: boolean;
   }) => {
     setLoading(true);
     try {
-      const { category = "", source = "", author = "", date = "" } = filter;
-      const query = category ? category : "latest"; // Default query term
+      const {
+        category = "",
+        source = "",
+        author = "",
+        date = "",
+        hasImage = false,
+      } = filter;
+      const query = category ? category : "latest";
 
-      // Fetch from NewsAPI with source if applicable
       const newsAPIArticles = source
         ? await fetchNewsFromNewsAPI(query, date, "popularity", source, author)
         : await fetchNewsFromNewsAPI(
@@ -73,11 +74,14 @@ const App: React.FC = () => {
 
       const nytArticles = await fetchNewsFromNYT(query, date, author);
 
-      // Combine and filter articles
-      const allArticles = [...newsAPIArticles, ...nytArticles];
-      const filteredArticles = filterRemovedContent(allArticles);
+      let allArticles = [...newsAPIArticles, ...nytArticles];
 
-      // Limit results to 50
+      // Filter articles based on the presence of an image
+      if (hasImage) {
+        allArticles = allArticles.filter((article) => article.imageUrl);
+      }
+
+      const filteredArticles = filterRemovedContent(allArticles);
       setArticles(filteredArticles.slice(0, 50));
     } catch (error) {
       console.error("Error fetching articles:", error);
@@ -86,7 +90,6 @@ const App: React.FC = () => {
     }
   };
 
-  // Fetch articles for all categories on initial load
   useEffect(() => {
     const fetchInitialArticles = async () => {
       setLoading(true);
@@ -96,7 +99,6 @@ const App: React.FC = () => {
         const guardianArticles = await fetchNewsFromGuardian(defaultCategory);
         const nytArticles = await fetchNewsFromNYT(defaultCategory);
 
-        // Combine and filter articles
         const allArticles = [
           ...newsAPIArticles,
           ...guardianArticles,
@@ -113,7 +115,7 @@ const App: React.FC = () => {
     };
 
     fetchInitialArticles();
-  }, []); // Empty dependency array ensures this runs only on initial load
+  }, []);
 
   return (
     <div className='app'>
