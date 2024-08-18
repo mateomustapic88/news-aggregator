@@ -126,7 +126,7 @@ const App: React.FC = () => {
           onFilterChange={handleFilterChange}
         />
         {loading ? (
-          <p>Loading articles...</p>
+          <p className='loading'>Loading articles...</p>
         ) : (
           <ArticleList articles={articles} />
         )}
