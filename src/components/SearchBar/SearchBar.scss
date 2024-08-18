@@ -25,6 +25,13 @@
   cursor: pointer;
   font-weight: 700;
   border-radius: 1.83em;
+
+  // Style for disabled state
+  &:disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+  }
 }
 
 .search-bar__clear {
