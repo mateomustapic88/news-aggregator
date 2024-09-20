@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Innoscripta News Aggregator App is a React-based application that allows users to search and filter news articles from various sources. Users can customize their news feed by selecting preferred sources, categories, and authors. The app integrates with multiple news APIs to provide a comprehensive news experience.
+The News Aggregator App is a React-based application that allows users to search and filter news articles from various sources. Users can customize their news feed by selecting preferred sources, categories, and authors. The app integrates with multiple news APIs to provide a comprehensive news experience.
 
 ## Features
 
@@ -22,7 +22,7 @@ The Innoscripta News Aggregator App is a React-based application that allows use
 
 ## Installation
 
-To get started with the Innoscripta News Aggregator App, follow these steps:
+To get started with the News Aggregator App, follow these steps:
 
 1. **Clone the Repository**
 
