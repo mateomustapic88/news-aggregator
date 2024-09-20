@@ -1,4 +1,4 @@
-# innoscripta-frontend-challenge
+# News Aggregator
 
 ## Overview
 
