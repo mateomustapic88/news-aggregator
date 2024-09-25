@@ -4,7 +4,7 @@ import "./Header.scss";
 const Header: React.FC = () => {
   return (
     <header className='header'>
-      <h1 className='header__title'>Innoscripta News Aggregator</h1>
+      <h1 className='header__title'>News Aggregator</h1>
     </header>
   );
 };
