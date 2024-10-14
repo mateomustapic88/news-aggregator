@@ -11,12 +11,17 @@ import {
 } from "./services/newsService";
 import "./App.scss";
 import { filterRemovedContent } from "./utils/filterRemovedContent";
+import {
+  getSavedArticles,
+  saveArticle,
+  removeArticle,
+} from "./utils/localStorageUtil";
 
 const App: React.FC = () => {
   const [articles, setArticles] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [showReadLater, setShowReadLater] = useState(false);
-  const [savedArticles, setSavedArticles] = useState<any[]>([]);
+  const [savedArticles, setSavedArticles] = useState<any[]>(getSavedArticles());
 
   const sources = [
     { name: "CNN", id: "cnn", api: "newsapi" },
@@ -126,26 +131,22 @@ const App: React.FC = () => {
   };
 
   const handleSaveForLater = (article: any) => {
-    setSavedArticles((prevSavedArticles) => {
-      if (
-        prevSavedArticles.find(
-          (savedArticle) => savedArticle.title === article.title
-        )
-      ) {
-        return prevSavedArticles.filter(
-          (savedArticle) => savedArticle.title !== article.title
-        );
-      }
-      return [...prevSavedArticles, article];
-    });
+    const saved = getSavedArticles();
+    if (
+      saved.find(
+        (savedArticle: { title: any }) => savedArticle.title === article.title
+      )
+    ) {
+      removeArticle(article.title);
+    } else {
+      saveArticle(article);
+    }
+    setSavedArticles(getSavedArticles());
   };
 
   const handleRemoveFromSaved = (article: any) => {
-    setSavedArticles((prevSavedArticles) =>
-      prevSavedArticles.filter(
-        (savedArticle) => savedArticle.title !== article.title
-      )
-    );
+    removeArticle(article.title);
+    setSavedArticles(getSavedArticles());
   };
 
   const isArticleSaved = (article: any) =>

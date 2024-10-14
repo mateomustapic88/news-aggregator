@@ -24,7 +24,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles }) => {
           imageUrl={article.imageUrl}
           source={article.source}
           publishedAt={article.publishedAt}
-          actionButton={article.actionButton} // Pass the action button
+          actionButton={article.actionButton}
         />
       ))}
     </div>
