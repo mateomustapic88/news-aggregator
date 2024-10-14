@@ -93,6 +93,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
       </div>
 
       <div className='filter-options__date-group'>
+        <label>From date:</label>
         <input
           type='date'
           className='filter-options__input'
