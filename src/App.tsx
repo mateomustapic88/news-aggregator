@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header/Header";
 import SearchBar from "./components/SearchBar/SearchBar";
 import FilterOptions from "./components/FilterOptions/FilterOptions";
@@ -138,8 +140,10 @@ const App: React.FC = () => {
       )
     ) {
       removeArticle(article.title);
+      toast.info("Removed from Read Later");
     } else {
       saveArticle(article);
+      toast.success("Saved for Read Later");
     }
     setSavedArticles(getSavedArticles());
   };
@@ -147,6 +151,7 @@ const App: React.FC = () => {
   const handleRemoveFromSaved = (article: any) => {
     removeArticle(article.title);
     setSavedArticles(getSavedArticles());
+    toast.info("Removed from Read Later");
   };
 
   const isArticleSaved = (article: any) =>
@@ -195,6 +200,9 @@ const App: React.FC = () => {
           />
         )}
       </div>
+
+      {/* Toast Container */}
+      <ToastContainer position='top-right' autoClose={2000} />
     </div>
   );
 };
