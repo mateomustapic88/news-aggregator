@@ -10,7 +10,7 @@ interface ReadLaterProps {
     source: string;
     publishedAt: string;
   }[];
-  onRemoveArticle: (article: any) => void; // Add this prop
+  onRemoveArticle: (article: any) => void;
 }
 
 const ReadLater: React.FC<ReadLaterProps> = ({
@@ -41,7 +41,7 @@ const ReadLater: React.FC<ReadLaterProps> = ({
           ))}
         </div>
       ) : (
-        <p>No articles saved for later.</p>
+        <p className='no-articles'>No articles saved for later.</p>
       )}
     </div>
   );

@@ -8,7 +8,7 @@ interface ArticleCardProps {
   imageUrl: string;
   source: string;
   publishedAt: string;
-  actionButton?: JSX.Element; // Add this prop
+  actionButton?: JSX.Element;
 }
 
 const ArticleCard: React.FC<ArticleCardProps> = ({
